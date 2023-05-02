@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:slider_animation/src/data/slider_data.dart';
 
 class ContainerExpanded extends StatefulWidget {
-  const ContainerExpanded({super.key});
+  const ContainerExpanded({super.key, required this.sliderData});
 
   @override
   State<ContainerExpanded> createState() => _ContainerExpandedState();
+
+  final SliderData sliderData;
 }
 
 class _ContainerExpandedState extends State<ContainerExpanded>
@@ -49,14 +52,15 @@ class _ContainerExpandedState extends State<ContainerExpanded>
         setState(() {
           isExpanded = !isExpanded;
         });
-
-        print('boleano puto $isExpanded');
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.only(left: 8, bottom: 8),
         decoration: BoxDecoration(
-            color: isExpanded ? Colors.redAccent : Colors.blueAccent,
+            image: DecorationImage(
+              image: NetworkImage(widget.sliderData.img),
+              fit: BoxFit.cover,
+            ),
             borderRadius: BorderRadius.circular(20)),
         margin: const EdgeInsets.only(right: 10),
         height: 150,
@@ -70,9 +74,11 @@ class _ContainerExpandedState extends State<ContainerExpanded>
                 builder: (context, child) {
                   return Transform.translate(
                       offset: Offset(0, sizeText - _animation.value),
-                      child: const Text(
-                        'Flutter',
-                        style: TextStyle(
+                      child: Text(
+                        widget.sliderData.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 18),
@@ -83,10 +89,11 @@ class _ContainerExpandedState extends State<ContainerExpanded>
               opacity: isExpanded ? 1 : 0,
               child: SizedBox(
                 height: sizeText,
-                child: const Text(
-                  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasdass1zzzzzzzzzzzzzaaaaaaaaaaaaaaaaaaaaaaaa',
+                child: Text(
+                  widget.sliderData.description,
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.white.withOpacity(0.6)),
                 ),
               ),
             )

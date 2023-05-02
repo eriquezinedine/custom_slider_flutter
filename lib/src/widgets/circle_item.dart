@@ -36,7 +36,9 @@ class _CircleItemState extends State<CircleItem> {
         duration: const Duration(milliseconds: 300),
         decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: widget.isActive ? Colors.black : Colors.black45),
+            color: widget.isActive
+                ? Color.fromARGB(255, 175, 168, 168)
+                : Colors.black45),
       ),
     );
   }
