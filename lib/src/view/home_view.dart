@@ -8,7 +8,8 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = SliderController();
+    int length = 5;
+    final controller = SliderController(length: length);
     return SafeArea(
       child: Scaffold(
           body: Column(
@@ -60,15 +61,16 @@ class _ControllerSlider extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              ...List.generate(5, (index) {
+              ...List.generate(controller.length, (index) {
                 return CircleItem(
                   isActive: index == value,
                   onTap: () {
                     controller.changeIndex(index);
                     final maxScroll =
                         controller.getController.position.maxScrollExtent;
-                    controller.positionInit(
-                        index == 0 ? 0 : maxScroll * (index + 1) / 5);
+                    controller.positionInit(index == 0
+                        ? 0
+                        : maxScroll * (index + 1) / controller.length);
                   },
                 );
               })

@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 
 class SliderController {
   late ScrollController _controller;
+  final int length;
 
   final indexScroll = ValueNotifier(0);
 
-  void init() {
+  void init(int length) {
     _controller = ScrollController();
     _controller.addListener(() {
       final maxScroll = _controller.position.maxScrollExtent;
@@ -13,10 +14,10 @@ class SliderController {
       int index = 0;
 
       if (pointer == maxScroll) {
-        index = 5 - 1;
+        index = length - 1;
       } else {
-        for (var i = 1; i <= 5; i++) {
-          if (pointer <= maxScroll * i / 5) {
+        for (var i = 1; i <= length; i++) {
+          if (pointer <= maxScroll * i / length) {
             index = i - 1;
             break;
           }
@@ -39,8 +40,8 @@ class SliderController {
     });
   }
 
-  SliderController() {
-    init();
+  SliderController({required this.length}) {
+    init(length);
   }
 
   void dispose() {
